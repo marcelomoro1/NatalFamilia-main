@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Natal em Família color palette (Christmas Red Theme) */
+    --background: 0 20% 98%; /* Warm snow white */
+    --foreground: 350 40% 20%; /* Dark red/brown text */
+    
+    --card: 0 10% 96%;
+    --card-foreground: 350 40% 20%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 350 40% 20%;
+    
+    --primary: 350 89% 60%; /* Christmas Red */
+    --primary-foreground: 0 0% 100%;
+    
+    --text-primary: 350 40% 20%;
+    --text-light: 350 20% 45%;
+    --text-foreground: 0 0% 99%;
+    
+    --secondary: 142 30% 90%; /* Light green hint */
+    --secondary-foreground: 142 70% 20%;
+    
+    --muted: 0 10% 94%;
+    --muted-foreground: 0 10% 45%;
+    
+    --accent: 350 89% 60%; /* Same as primary */
+    --accent-foreground: 0 0% 100%;
+    
+    /* Call to Action - Green for contrast (Christmas Tree Green) */
+    --cta: 142 76% 36%;
+    --cta-foreground: 0 0% 100%;
+    
+    --border: 0 10% 88%;
+    --border-accent: 350 70% 80%;
+    
+    --input: 0 10% 88%;
+    --ring: 350 89% 60%;
+    
+    --radius: 0.5rem;
+
+    /* Font families */
+    --font-manrope: "Manrope", "Manrope Fallback", sans-serif;
+    --font-poppins: "Poppins", "Poppins Fallback", sans-serif;
+    --font-inter: "Inter", "Inter Fallback", sans-serif;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-manrope), system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-poppins), system-ui, sans-serif;
+  }
+}
