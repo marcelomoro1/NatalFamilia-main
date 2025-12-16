@@ -51,17 +51,33 @@ onMounted(() => {
         </p>
       </div>
     </div>
+    
+    <div class="bottom-gradient"></div>
   </section>
 </template>
 
 <style scoped>
 .message-section {
-  padding: 40px 20px 80px 20px;
-  background: linear-gradient(to bottom, #fff5f5 0%, #ffffff 50%, #e8f5e9 100%);
+  padding: 80px 20px 200px 20px; 
+  /* Gradient now fades to transparent at the bottom to blend with the underlying Tree section */
+  background: linear-gradient(to bottom, #142419 0%, #1a2a1d 80%, rgba(26, 42, 29, 0) 100%);
   display: flex;
   justify-content: center;
   position: relative;
   z-index: 10;
+  margin-bottom: -150px; 
+}
+
+.bottom-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* Gradient specifically to bridge the gap smoothly */
+    height: 300px;
+    background: linear-gradient(to bottom, transparent 0%, #1a2a1d 50%, transparent 100%);
+    pointer-events: none;
+    z-index: -1; /* Put behind content but inside section */
 }
 
 .message-card {

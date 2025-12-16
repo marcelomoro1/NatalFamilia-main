@@ -20,12 +20,12 @@ defineProps({
 
 <style scoped>
 footer {
-  background-color: #1a1a1a;
+  background-color: #020403; /* Matches end of Guestbook */
   color: #888;
   text-align: center;
   padding: 40px 20px 80px 20px; /* Padding extra embaixo por causa do botão de áudio */
   font-size: 0.9rem;
-  border-top: 1px solid #333;
+  border-top: 1px solid #1a2a1d;
 }
 
 .love-note {

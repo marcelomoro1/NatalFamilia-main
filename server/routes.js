@@ -110,8 +110,9 @@ router.get('/payment/:id', async (req, res) => {
 
 
 const uploadFields = upload.fields([
-  { name: 'photos', maxCount: 10 },
-  { name: 'wish_images', maxCount: 10 }
+  { name: 'photos', maxCount: 20 },
+  { name: 'wish_images', maxCount: 15 },
+  { name: 'timeline_photos', maxCount: 20 }
 ]);
 
 router.post('/family', uploadFields, async (req, res) => {
@@ -119,6 +120,7 @@ router.post('/family', uploadFields, async (req, res) => {
 
   const photosFiles = req.files['photos'] || [];
   const wishFiles = req.files['wish_images'] || [];
+  const timelineFiles = req.files['timeline_photos'] || [];
 
   if (!name || !paymentId) {
     return res.status(400).json({ error: 'Nome e ID do pagamento são obrigatórios' });
@@ -131,8 +133,29 @@ router.post('/family', uploadFields, async (req, res) => {
 
     if (!payment) return res.status(400).json({ error: 'Pagamento inválido' });
 
+    // 1. General Photos (Carousel) - Just paths
     const photoPaths = photosFiles.map(f => `/uploads/${f.filename}`);
     const photosJson = JSON.stringify(photoPaths);
+
+    // 2. Timeline Photos (Metadata)
+    const timelinePaths = timelineFiles.map(f => `/uploads/${f.filename}`);
+    let timelineData = [];
+
+    if (req.body.timeline_metadata) {
+      try {
+        const metadata = JSON.parse(req.body.timeline_metadata);
+        // Map metadata to uploaded files. 
+        // NOTE: The order of req.files['timeline_photos'] should match the client-side append order
+        timelineData = timelinePaths.map((path, index) => ({
+          src: path,
+          date: metadata[index]?.date || null,
+          caption: metadata[index]?.caption || null
+        }));
+      } catch (e) {
+        console.error("Erro parsing timeline_metadata", e);
+      }
+    }
+    const timelineJson = JSON.stringify(timelineData);
 
 
     let wishesData = [];
@@ -168,7 +191,8 @@ router.post('/family', uploadFields, async (req, res) => {
           name: name,
           slug: uniqueSlug,
           payment_id: parseInt(paymentId),
-          photos: photosJson,
+          photos: photosJson, // General Carousel
+          timeline: timelineJson, // Photo Timeline
           youtubeLink: req.body.youtubeLink || null,
           message: req.body.message || null,
           wishes: JSON.stringify(wishesData)
@@ -225,15 +249,73 @@ router.get('/family/:slug', async (req, res) => {
       }
     }
 
+    let processedTimeline = [];
+    if (family.timeline) {
+      try {
+        processedTimeline = JSON.parse(family.timeline);
+      } catch (e) {
+        processedTimeline = [];
+      }
+    }
+
     res.json({
       ...family,
       wishes: processedWishes,
-      photos: processedPhotos
+      photos: processedPhotos,
+      timeline: processedTimeline
     });
 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erro ao buscar família' });
+  }
+});
+
+// --- Time Capsule Routes ---
+
+router.post('/capsule', async (req, res) => {
+  try {
+    const { familySlug, sender, message } = req.body;
+
+    const family = await prisma.family.findUnique({
+      where: { slug: familySlug }
+    });
+
+    if (!family) return res.status(404).json({ error: 'Família não encontrada' });
+
+    const newMsg = await prisma.capsuleMessage.create({
+      data: {
+        familyId: family.id,
+        sender,
+        message
+      }
+    });
+
+    res.json(newMsg);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao salvar mensagem' });
+  }
+});
+
+router.get('/capsule/:slug', async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const family = await prisma.family.findUnique({
+      where: { slug },
+      include: {
+        capsule_messages: {
+          orderBy: { createdAt: 'desc' }
+        }
+      }
+    });
+
+    if (!family) return res.status(404).json({ error: 'Família não encontrada' });
+
+    res.json(family.capsule_messages);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar cápsula' });
   }
 });
 

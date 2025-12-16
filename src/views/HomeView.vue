@@ -8,6 +8,7 @@ import HeroSection from '../components/HeroSection.vue';
 import ImageCarousel from '../components/ImageCarousel.vue';
 import MessageSection from '../components/MessageSection.vue';
 import WishesTreeSection from '../components/WishesTreeSection.vue';
+import TimeCapsuleSection from '../components/TimeCapsuleSection.vue';
 import GuestbookSection from '../components/GuestbookSection.vue';
 import FooterSection from '../components/FooterSection.vue';
 
@@ -19,6 +20,7 @@ const familyName = ref('');
 const familyMessage = ref(null);
 const familyWishes = ref(null);
 const familyPhotos = ref([]);
+const familyTimeline = ref([]);
 
 const isPersonalized = computed(() => !!route.params.familyName);
 
@@ -30,7 +32,7 @@ onMounted(async () => {
       
       try {
 
-        const response = await fetch(`http://localhost:3000/api/family/${id}`);
+        const response = await fetch(`http://localhost:3000/api/family/${slug}`);
         
         if (response.ok) {
           const data = await response.json();
@@ -47,16 +49,25 @@ onMounted(async () => {
             })) 
             : [];
 
+          // General Carousel Photos (Simple Paths)
           familyPhotos.value = Array.isArray(data.photos)
              ? data.photos.map(photo => `http://localhost:3000${photo}`)
              : [];
+             
+          // Timeline Photos (Objects)
+          familyTimeline.value = Array.isArray(data.timeline)
+            ? data.timeline.map(item => ({
+                ...item,
+                src: `http://localhost:3000${item.src}`
+            }))
+            : [];
              
            if (data.youtubeLink && setAudioSource) {
                setAudioSource(data.youtubeLink);
            }
              
         } else {
-            console.error('Família não encontrada pelo ID:', id);
+            console.error('Família não encontrada pelo ID:', slug);
             familyName.value = 'Família não encontrada';
         }
       } catch (e) {
@@ -87,6 +98,7 @@ const handleGiftOpen = () => {
       <ImageCarousel :custom-images="familyPhotos" />
       <MessageSection :text="familyMessage" />
       <WishesTreeSection background-image="/tree.png" :customOrnaments="familyWishes" />
+      <TimeCapsuleSection :photos="familyTimeline" />
       <GuestbookSection />
     </main>
 

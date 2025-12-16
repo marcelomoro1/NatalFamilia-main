@@ -8,8 +8,8 @@
         <!-- Brand -->
         <div class="col-span-1">
           <div class="flex items-center gap-2 mb-4">
-            <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-accent-foreground font-bold">
-              🎄
+            <div class="w-16 h-16 flex items-center justify-center">
+              <img src="@/assets/Alces/Icone.png" alt="Logo" class="w-full h-full object-contain" />
             </div>
             <span class="font-poppins font-bold text-lg text-text-primary">Natal em Família</span>
           </div>

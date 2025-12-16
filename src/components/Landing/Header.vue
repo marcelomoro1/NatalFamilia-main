@@ -12,10 +12,9 @@ const toggleMenu = () => {
   <header class="sticky top-0 z-40 w-full bg-white border-b border-border">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <!-- Logo -->
         <div class="flex items-center gap-2">
-          <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-accent-foreground font-bold text-lg">
-            🎄
+          <div class="w-16 h-16 flex items-center justify-center">
+            <img src="@/assets/Alces/Icone.png" alt="Logo" class="w-full h-full object-contain" />
           </div>
           <span class="font-poppins font-bold text-lg text-text-primary">Natal em Família</span>
         </div>

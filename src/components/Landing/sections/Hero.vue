@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import gifCorreto from '@/assets/Celular/GifCorreto.gif';
 
 const typedText = ref('');
 const fullText = 'com sua família';
@@ -92,33 +93,21 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Right Column: Illustration/Mockup -->
+        <!-- Right Column: GIF Mockup -->
         <div class="relative h-full min-h-96 lg:min-h-full flex items-center justify-center">
-          <!-- Decorative floating shapes -->
-          <div class="absolute top-10 right-10 w-24 h-24 bg-accent/10 rounded-3xl rotate-12 animate-pulse" />
-          <div class="absolute bottom-20 left-10 w-32 h-32 bg-accent/5 rounded-full animate-pulse" />
+            <!-- Decorative Glow -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[500px] bg-accent/20 rounded-full blur-[100px] pointer-events-none"></div>
 
-          <!-- Mock-up Card/Phone Illustration -->
-          <div class="relative z-10 w-full max-w-sm">
-            <div class="bg-gradient-to-br from-accent to-accent/70 rounded-3xl p-1 shadow-2xl">
-              <div class="bg-background rounded-3xl p-6 space-y-4">
-                <div class="aspect-video bg-gradient-to-br from-accent/20 to-accent/10 rounded-xl flex items-center justify-center">
-                  <span class="text-6xl">🎄</span>
-                </div>
-                <div class="space-y-3">
-                  <div class="h-2 bg-accent/10 rounded-full w-3/4" />
-                  <div class="h-2 bg-accent/10 rounded-full w-full" />
-                  <div class="h-2 bg-accent/10 rounded-full w-2/3" />
-                </div>
-              </div>
+            <!-- GIF Container -->
+            <!-- Increased size by another 10% (240px -> 264px) -->
+            <div class="relative z-10 w-full max-w-[264px] mx-auto transition-transform hover:scale-[1.02] duration-500">
+                 <!-- The GIF itself, styled to look like a floating device/screen -->
+                 <img 
+                    :src="gifCorreto" 
+                    alt="App Demo Preview" 
+                    class="w-full h-auto rounded-[2.5rem] shadow-2xl border-4 border-slate-900"
+                 />
             </div>
-
-            <!-- Notification Card -->
-            <div class="absolute -bottom-8 -left-6 bg-white rounded-2xl p-4 shadow-xl border border-border max-w-xs">
-              <p class="text-sm font-semibold text-text-primary">Feliz Natal!</p>
-              <p class="text-xs text-text-light">De: Sua Família</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

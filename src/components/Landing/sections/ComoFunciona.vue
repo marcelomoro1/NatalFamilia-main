@@ -1,28 +1,33 @@
 <script setup>
+import AlceCamera from '@/assets/Alces/AlceCamera.png'
+import AlceEscrevendo from '@/assets/Alces/AlceEscrevendo.png'
+import AlcePresente from '@/assets/Alces/AlcePresente.JPG'
+import AlceFeliz from '@/assets/Alces/AlceFeliz.png'
+
 const steps = [
   {
     number: 1,
     title: 'Escolha suas fotos',
     description: 'Selecione as melhores fotos do ano da sua família e momentos especiais.',
-    emoji: '📸'
+    image: AlceCamera
   },
   {
     number: 2,
     title: 'Escreva sua mensagem',
     description: 'Adicione desejos de Feliz Natal e Próspero Ano Novo personalizados.',
-    emoji: '✍️'
+    image: AlceEscrevendo
   },
   {
     number: 3,
     title: 'Gere seu Site',
     description: 'Nossa plataforma cria automaticamente um lindo site de Natal para sua família.',
-    emoji: '🎁'
+    image: AlcePresente
   },
   {
     number: 4,
     title: 'Compartilhe a Magia',
     description: 'Envie o link ou QR Code para todos os parentes e amigos.',
-    emoji: '✨'
+    image: AlceFeliz
   }
 ]
 </script>
@@ -55,8 +60,14 @@ const steps = [
             {{ step.number }}
           </div>
 
-          <!-- Emoji -->
-          <div class="text-4xl mb-4">{{ step.emoji }}</div>
+          <!-- Image -->
+          <div class="mb-6 h-48 flex items-center justify-center">
+            <img 
+              :src="step.image" 
+              :alt="step.title"
+              class="h-full w-auto object-contain"
+            />
+          </div>
 
           <!-- Title -->
           <h3 class="font-poppins font-bold text-lg text-text-primary mb-3">

@@ -92,7 +92,7 @@ const getDelay = (index) => {
           
           <h3 class="wish-title">{{ activeWish.title }}</h3>
 
-          <div class="wish-content-wrapper">
+          <div class="wish-content-wrapper" style="display: flex; justify-content: center;">
              <img v-if="activeWish.image" :src="activeWish.image" class="wish-modal-image" />
           </div>
           
@@ -104,18 +104,30 @@ const getDelay = (index) => {
         </div>
       </div>
     </Transition>
+    
+    <div class="bottom-gradient"></div>
   </section>
 </template>
 
 <style scoped>
 .tree-section {
-  padding: 60px 20px 100px;
-  /* Fallback: cor de fundo caso não tenha imagem */
-  background-color: #1a2a1d;
+  padding: 280px 20px 100px; /* Significantly increased top padding to clear the 400px/150px gradient overlap */
+  background: linear-gradient(to bottom, #1a2a1d 0%, #0f1c13 100%);
   position: relative;
   overflow: hidden;
   text-align: center;
   min-height: 80vh;
+}
+
+.bottom-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to bottom, transparent, #0f1c13);
+    pointer-events: none;
+    z-index: 5;
 }
 
 .tree-section::before {
@@ -125,7 +137,8 @@ const getDelay = (index) => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  /* Fade-in overlay to avoid hard line at top */
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 15%);
   z-index: 0;
   pointer-events: none;
 }
@@ -220,7 +233,8 @@ const getDelay = (index) => {
   transition: all 0.3s ease;
   z-index: 10;
   box-shadow: 0 0 15px rgba(248, 178, 41, 0.6);
-  animation: float 4s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(248, 178, 41, 0.6);
+  animation: float 4s ease-in-out infinite, twinkle 2s ease-in-out infinite alternate;
   display: flex;
   align-items: center;
   justify-content: center;

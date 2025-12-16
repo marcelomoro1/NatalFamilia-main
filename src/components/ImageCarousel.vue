@@ -220,11 +220,10 @@ onUnmounted(() => {
         class="mySwiper"
         :key="swiperKey"
       >
-        <swiper-slide v-for="(img, index) in images" :key="index">
+        <swiper-slide v-for="(img, index) in images" :key="index" @click="openModal(index)">
           <img 
             :src="img.src" 
             :alt="img.alt" 
-            @click="openModal(index)"
             @error="(e) => { e.target.src = 'https://placehold.co/800x450/333/white?text=Erro+Imagem'; }"
             class="carousel-image"
           />
@@ -292,8 +291,8 @@ onUnmounted(() => {
 
 <style scoped>
 .gallery-section {
-  padding: clamp(40px, 8vw, 60px) 0;
-  background: linear-gradient(to bottom, #e8f5e9 0%, var(--color-green, #165B33) 20%, var(--color-green, #165B33) 80%, #1a1a1a 100%);
+  padding: clamp(60px, 10vw, 80px) 0;
+  background: linear-gradient(to bottom, #0f1c13 0%, #142419 100%);
   color: white;
   text-align: center;
   overflow-x: hidden;
